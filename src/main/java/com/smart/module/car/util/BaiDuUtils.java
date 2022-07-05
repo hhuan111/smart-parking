@@ -1,0 +1,107 @@
+package com.smart.module.car.util;
+
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.baidu.aip.ocr.AipOcr;
+import com.smart.common.util.SslUtils;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.util.HashMap;
+
+/**
+ * 百度智能AI
+ */
+@Component
+@Configuration
+@EnableConfigurationProperties({BaiDuProperties.class})
+public class BaiDuUtils {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(BaiDuUtils.class);
+
+    private BaiDuProperties baiDu;
+
+    public BaiDuUtils(BaiDuProperties baiDu) {
+        this.baiDu = baiDu;
+    }
+
+    private AipOcr client;
+
+    @PostConstruct
+    public void init() {
+        try {
+            client = new AipOcr(baiDu.getAppId(), baiDu.getApiKey(), baiDu.getAccessKeySecret());
+            client.setConnectionTimeoutInMillis(2000);
+            client.setSocketTimeoutInMillis(60000);
+        } catch (Exception e) {
+            LOGGER.error("百度智能AI初始化失败,{}", e.getMessage());
+        }
+    }
+
+    /**
+     * 参数为本地图片路径
+     */
+    public String plateLicense(String image) {
+        try {
+            HashMap<String, String> options = new HashMap<>();
+            /**
+             * 是否检测多张车牌，默认为false
+             * 当置为true的时候可以对一张图片内的多张车牌进行识别
+             */
+            options.put("multi_detect", "true");
+            SslUtils.ignoreSsl();
+            JSONObject res = client.plateLicense(image, options);
+            System.out.println(res.toString());
+            Object result = res.get("words_result");
+            JSONArray array = JSON.parseArray(result.toString());
+            com.alibaba.fastjson.JSONObject object = JSON.parseObject(array.get(0).toString());
+            Object number = object.get("number");
+            return number.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static void main(String[] args)  {
+        try {
+            AipOcr client = new AipOcr("26229192", "wKIdVGPc7myOuViiO3qAqBrV", "5aQGW4VnAFsLr9fYppPFaElxkk9rNXhN");
+            client.setConnectionTimeoutInMillis(2000);
+            client.setSocketTimeoutInMillis(60000);
+            HashMap<String, String> options = new HashMap<>();
+            String image = "E:\\smart-parking\\src\\main\\resources\\static\\images\\plate_num\\1.jpg";
+            /**
+             * 是否检测多张车牌，默认为false
+             * 当置为true的时候可以对一张图片内的多张车牌进行识别
+             */
+            options.put("multi_detect", "true");
+            SslUtils.ignoreSsl();
+            JSONObject res = client.plateLicense(image, options);
+            Object result = res.get("words_result");
+            JSONArray array = JSON.parseArray(result.toString());
+            com.alibaba.fastjson.JSONObject object = JSON.parseObject(array.get(0).toString());
+            Object number = object.get("number");
+            System.out.println("车牌:"+number);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+//        String image = "E:\\smart-parking\\src\\main\\resources\\static\\images\\plate_num\\1.jpg";
+//        String url = "https://car.52itstyle.vip/upload";
+//        try {
+//            HttpResponse response = HttpRequest.post(url)
+//                    .form("licensePlate", new File(image))
+//                    .executeAsync();
+//            System.out.println(response.body());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
+}

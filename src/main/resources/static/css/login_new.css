@@ -1,0 +1,131 @@
+.layui-form {
+	width: 380px !important;
+	height: 430px;
+	background-color: rgb(255,255,255);
+	padding: 10px 30px;
+	border-radius: 5px;
+	position: absolute;
+	left: 50%;
+	top: 40%;
+	transform: translate(-50%,-40%);
+	box-shadow: 0 0 25px #cac6c6;
+}
+
+.layui-form button {
+	width: 100% !important;
+	height: 44px !important;
+	line-height: 44px !important;
+	font-size: 16px !important;
+	background-color: #0636ae !important;
+	font-weight: 600 !important;
+	display:block;
+	margin:0 auto;
+}
+
+.layui-form-checked[lay-skin=primary] i {
+	border-color: #0636ae !important;
+	background-color: #0636ae !important;
+	color: #fff !important;
+}
+
+.layui-tab-content {
+	margin-top: 15px !important;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+
+.layui-form-item {
+	margin-top: 20px !important;
+}
+
+.layui-input {
+	height: 44px !important;
+	line-height: 44px !important;
+	padding-left: 15px !important;
+	border-radius: 3px !important;
+}
+
+.layui-input:focus {
+	box-shadow: 0px 0px 3px 1px #0636ae !important;
+}
+
+.logo {
+	width: 40px !important;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+	margin-left: 20px !important;
+}
+
+.title {
+	padding-bottom: 10px;
+	letter-spacing: 10px;
+	text-shadow: 0 12px 7px #c8e494;
+	color: #0636ae !important;
+	text-align: center!important;
+	font-weight: 600 !important;
+}
+
+.desc {
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	width: 100% !important;
+	text-align: center !important;
+	color: gray !important;
+	height: 20px !important;
+	line-height: 20px !important;
+	letter-spacing: 20px;
+	font-variant: all-small-caps;
+	word-spacing: 5px;
+	text-shadow: -4px -4px 5px #aaa;
+	padding-bottom: 20px;
+}
+
+body {
+	background-repeat:no-repeat;
+	background-color: whitesmoke;
+	background-size: 100%;
+	height: 100%;
+ }
+
+.code {
+	float: left;
+	margin-right: 13px;
+	margin: 0px !important;
+	border: #e6e6e6 1px solid;
+	display: inline-block!important;
+}
+
+.codeImage {
+	float: right;
+	height: 42px;
+	border: #e6e6e6 1px solid;
+}
+
+.pear-btn {
+	display: inline-block;
+	line-height: 38px;
+	white-space: nowrap;
+	cursor: pointer;
+	background-color: #fff;
+	border: 1px solid #dcdfe6;
+	color: #606266;
+	text-align: center;
+	box-sizing: border-box;
+	outline: none;
+	transition: 0.1s;
+	font-weight: 500;
+	padding: 0 18px;
+	height: 38px;
+	font-size: 14px;
+	border-radius: 4px;
+}
+
+.pear-btn-success {
+	background-color: #0636ae !important;
+}
+.pear-btn-danger,
+.pear-btn-warming,
+.pear-btn-success,
+.pear-btn-primary {
+	color: #fff !important;
+}
